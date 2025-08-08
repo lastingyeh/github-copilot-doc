@@ -72,7 +72,7 @@ applyTo: '**'
 - Lombok Annotations:
     - @Getter, @Setter, @Builder, @Slf4j
     - Avoid field injection
-- SpringDoc OpenAPI for documentation
+- SpringDoc OpenAPI for documentation (e.g. springdoc-openapi-starter-webmvc-ui)
 - Database (Use Postgres if no special preference):
   - Postgres
   - MongoDB
