@@ -1,9 +1,9 @@
 ---
 applyTo: '**'
 ---
-# 開發準則
+# Development Guidelines
 
-## 0. 語言
+## 0. Language
 
 - - **Traditional Chinese** must be used for all communications and documents
 
