@@ -45,11 +45,11 @@ mode: agent
           - 🎯 核心功能
           - 🌐 API 設計
           - 🛡️ 安全機制
-          - ⚠️ 例外處理
+          - ⚠️ 例外處理 (exception handler)
           - ✅ 資料驗證
           - 🚀 效能優化
           - 📊 監控與日誌
-          - 📝 文件撰寫
+          - 📝 文件撰寫 (development documents)
           - 📦 部署設定
           - 🧩 其他
 
