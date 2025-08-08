@@ -66,8 +66,9 @@ applyTo: '**'
 ## 6. 技術
 
 - Java 17
-- Maven
+- Maven: 使用 Maven Wrapper (`mvnw`)
 - Spring Boot 3+
+- Docker: 優先使用新版 `docker compose` 指令語法
 - Lombok Annotations:
     - @Getter, @Setter, @Builder, @Slf4j
     - Avoid field injection

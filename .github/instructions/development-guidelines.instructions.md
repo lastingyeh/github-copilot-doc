@@ -66,8 +66,9 @@ applyTo: '**'
 ## 6. Technologies
 
 - Java 17
-- Maven
+- Maven: Use the Maven Wrapper (`mvnw`)
 - Spring Boot 3+
+- Docker: Prefer the new `docker compose` command syntax
 - Lombok Annotations:
     - @Getter, @Setter, @Builder, @Slf4j
     - Avoid field injection
