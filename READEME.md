@@ -58,11 +58,11 @@
     - 內容參考：[list-tasks.prompt.md](templates/.github/prompts/list-tasks.prompt.md)
 
 # 產生工作項目
-1. 在聊天視窗輸入 `/`，可以看到剛剛建立的 Prompt
+1. 在聊天視窗輸入 `/`，可以看到剛剛建立的 Prompt <br/>
   ![list-tasks-1.png](imgs/list-tasks-1.png)
-2. 選擇 `/list-tasks`，並按下 enter 或傳送
+2. 選擇 `/list-tasks`，並按下 enter 或傳送 <br/>
   ![list-tasks-2.png](imgs/list-tasks-2.png)
-3. AI 就會跟據 Prompt 的說明，拆解工作任務並將結果寫入 `docs/tasks` 資料夾 (這步驟工作比較多，需要等比較久)
+3. AI 就會跟據 Prompt 的說明，拆解工作任務並將結果寫入 `docs/tasks` 資料夾 (這步驟工作比較多，需要等比較久) <br/>
   ![list-tasks-3.png](imgs/list-tasks-3.png)
 
 
@@ -83,7 +83,7 @@
 ## 建立專案
 1. 點開建立專案的任務，選擇章節，並按下 enter 或傳送 <br/>
   ![init-project-1.png](imgs/init-project-1.png)
-2. AI 就會建立出 Spring Boot 專案
+2. AI 就會建立出 Spring Boot 專案 <br/>
   ![init-project-2.png](imgs/init-project-2.png)
 3. 嘗試使用 IDE 啟動服務，或是在聊天視窗輸入 `啟動服務` 並送出，確認程式可以正常運作
 
