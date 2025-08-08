@@ -10,7 +10,7 @@
   "files.associations": {
     ".env*": "plaintext",
     ".tmp": "plaintext",
-    ".png": "image",
-    "README.md": "readme"
-  }
+    ".png": "image"
+  },
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

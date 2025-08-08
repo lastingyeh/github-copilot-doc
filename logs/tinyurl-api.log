@@ -1,0 +1,58 @@
+2025-08-08T16:17:30.464+08:00  WARN 5991 --- [tinyurl-api] [main] ory$DuplicateJsonObjectContextCustomizer : 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/Users/cfh00543956/.m2/repository/org/json/json/20231013/json-20231013.jar!/org/json/JSONObject.class
+	jar:file:/Users/cfh00543956/.m2/repository/com/vaadin/external/google/android-json/0.0.20131108.vaadin1/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2025-08-08T16:17:30.469+08:00  INFO 5991 --- [tinyurl-api] [main] c.e.tinyurl.TinyUrlApplicationTest       : Starting TinyUrlApplicationTest using Java 24.0.1 with PID 5991 (started by cfh00543956 in /Users/cfh00543956/Desktop/Copilot/labs/shorturlapi-lab)
+2025-08-08T16:17:30.470+08:00 DEBUG 5991 --- [tinyurl-api] [main] c.e.tinyurl.TinyUrlApplicationTest       : Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-08-08T16:17:30.470+08:00  INFO 5991 --- [tinyurl-api] [main] c.e.tinyurl.TinyUrlApplicationTest       : The following 1 profile is active: "test"
+2025-08-08T16:17:30.482+08:00 DEBUG 5991 --- [tinyurl-api] [main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@3ecedf21
+2025-08-08T16:17:30.882+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-08-08T16:17:30.883+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-08-08T16:17:30.892+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2025-08-08T16:17:30.898+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-08-08T16:17:30.899+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-08-08T16:17:30.903+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-08-08T16:17:31.230+08:00  INFO 5991 --- [tinyurl-api] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-08-08T16:17:31.250+08:00  INFO 5991 --- [tinyurl-api] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-08-08T16:17:31.262+08:00  INFO 5991 --- [tinyurl-api] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-08-08T16:17:31.356+08:00  INFO 5991 --- [tinyurl-api] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-08-08T16:17:31.366+08:00  INFO 5991 --- [tinyurl-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-08-08T16:17:31.444+08:00  INFO 5991 --- [tinyurl-api] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-08-08T16:17:31.445+08:00  INFO 5991 --- [tinyurl-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-08-08T16:17:31.454+08:00  WARN 5991 --- [tinyurl-api] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-08-08T16:17:31.571+08:00  INFO 5991 --- [tinyurl-api] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-08-08T16:17:31.573+08:00  INFO 5991 --- [tinyurl-api] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-08-08T16:17:31.744+08:00  WARN 5991 --- [tinyurl-api] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-08-08T16:17:31.813+08:00 DEBUG 5991 --- [tinyurl-api] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2025-08-08T16:17:31.896+08:00 DEBUG 5991 --- [tinyurl-api] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-08-08T16:17:31.922+08:00 DEBUG 5991 --- [tinyurl-api] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-08T16:17:31.951+08:00 DEBUG 5991 --- [tinyurl-api] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-08T16:17:32.472+08:00  INFO 5991 --- [tinyurl-api] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-08-08T16:17:32.516+08:00  INFO 5991 --- [tinyurl-api] [main] c.e.tinyurl.TinyUrlApplicationTest       : Started TinyUrlApplicationTest in 2.189 seconds (process running for 2.615)
+2025-08-08T16:17:32.867+08:00  INFO 5991 --- [tinyurl-api] [main] com.example.tinyurl.TinyUrlApplication   : Starting TinyUrlApplication using Java 24.0.1 with PID 5991 (started by cfh00543956 in /Users/cfh00543956/Desktop/Copilot/labs/shorturlapi-lab)
+2025-08-08T16:17:32.867+08:00  INFO 5991 --- [tinyurl-api] [main] com.example.tinyurl.TinyUrlApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-08-08T16:17:32.981+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-08-08T16:17:32.981+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-08-08T16:17:32.983+08:00  INFO 5991 --- [tinyurl-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+2025-08-08T16:17:33.092+08:00  INFO 5991 --- [tinyurl-api] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-08-08T16:17:33.096+08:00  INFO 5991 --- [tinyurl-api] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-08-08T16:17:33.096+08:00  INFO 5991 --- [tinyurl-api] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-08-08T16:17:33.125+08:00  INFO 5991 --- [tinyurl-api] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-08-08T16:17:33.126+08:00  INFO 5991 --- [tinyurl-api] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 258 ms
+2025-08-08T16:17:33.173+08:00 DEBUG 5991 --- [tinyurl-api] [main] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-08-08T16:17:33.234+08:00 DEBUG 5991 --- [tinyurl-api] [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 6 mappings in 'requestMappingHandlerMapping'
+2025-08-08T16:17:33.266+08:00 DEBUG 5991 --- [tinyurl-api] [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-08-08T16:17:33.275+08:00 DEBUG 5991 --- [tinyurl-api] [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-08-08T16:17:33.280+08:00 DEBUG 5991 --- [tinyurl-api] [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-08-08T16:17:33.437+08:00  INFO 5991 --- [tinyurl-api] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2025-08-08T16:17:33.480+08:00  INFO 5991 --- [tinyurl-api] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2025-08-08T16:17:33.484+08:00  INFO 5991 --- [tinyurl-api] [main] com.example.tinyurl.TinyUrlApplication   : Started TinyUrlApplication in 0.632 seconds (process running for 3.583)
+2025-08-08T16:17:33.514+08:00 DEBUG 5991 --- [tinyurl-api] [SpringApplicationShutdownHook] o.s.w.c.s.GenericWebApplicationContext   : Closing org.springframework.web.context.support.GenericWebApplicationContext@3ecedf21, started on Fri Aug 08 16:17:30 CST 2025
+2025-08-08T16:17:33.526+08:00  INFO 5991 --- [tinyurl-api] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-08-08T16:17:33.527+08:00  INFO 5991 --- [tinyurl-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-08-08T16:17:33.528+08:00  INFO 5991 --- [tinyurl-api] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

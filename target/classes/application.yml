@@ -1,0 +1,98 @@
+spring:
+  application:
+    name: tinyurl-api
+
+  # 資料庫配置
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tinyurl_db}
+    username: ${DB_USERNAME:tinyurl}
+    password: ${DB_PASSWORD:password123}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 300000
+      max-lifetime: 600000
+
+  # JPA 配置
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        '[format_sql]': true
+        '[use_sql_comments]': false
+
+  # Redis 配置
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: 2000ms
+      jedis:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+  # Flyway 資料遷移
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+# 監控與管理端點
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  health:
+    redis:
+      enabled: true
+
+# 伺服器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 日誌配置
+logging:
+  level:
+    '[com.example.tinyurl]': INFO
+    '[org.springframework.web]': DEBUG
+    '[org.hibernate.SQL]': ${SQL_LOG_LEVEL:WARN}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: logs/tinyurl-api.log
+
+# OpenAPI 文件配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# 應用程式資訊
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0-SNAPSHOT
+    description: 短網址服務 - 採用 Clean Architecture 實作
+  build:
+    artifact: tinyurl-api
+    group: com.example

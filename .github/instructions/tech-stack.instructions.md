@@ -6,7 +6,7 @@ applyTo: '**'
 > **語言**：所有輸出一律使用**繁體中文**。
 
 ## 必選（Required）
-- **Java**：21（LTS）
+- **Java**：17（LTS）
 - **Spring Boot**：3.x
 - **建置**：Maven（必用 Maven Wrapper `mvnw`）
 - **日誌**：SLF4J API + Logback（console + JSON）
