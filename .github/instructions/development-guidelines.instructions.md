@@ -24,6 +24,7 @@ applyTo: '**'
     - Enums: UPPER_SNAKE_CASE
 
 ## 3. Directory Structure
+
 ```text
 .
 ├── docker      # Docker-related files (e.g., Dockerfile, docker-compose.yml)
@@ -41,6 +42,7 @@ applyTo: '**'
 ```
 
 ## 4. Development Practices
+
 - Controller Layer: Input validation and service delegation
 - Service Layer: Contains business logic
 - Repository Layer: Data access via Spring Data JPA
@@ -62,6 +64,7 @@ applyTo: '**'
     - Negative: Error and exception scenarios
 
 ## 6. Technologies
+
 - Java 17
 - Maven
 - Spring Boot 3+
@@ -105,6 +108,7 @@ applyTo: '**'
 - DTO Fields: @Schema with descriptions
 
 ## 10. Git Commit Convention
+
 - Commit Message Structure
   ```text
   <type>: <subject>
