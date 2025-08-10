@@ -12,5 +12,6 @@
     ".tmp": "plaintext",
     ".png": "image"
   },
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "disabled"
 }

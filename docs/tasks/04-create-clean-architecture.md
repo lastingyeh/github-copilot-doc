@@ -1,12 +1,12 @@
 # 04 - 建立 Clean Architecture 目錄結構
 
 ## 任務核取方塊
-- [ ] 建立 domain 層目錄結構
-- [ ] 建立 application 層目錄結構
-- [ ] 建立 adapters 層目錄結構
-- [ ] 建立 infrastructure 層目錄結構
-- [ ] 建立各層的 package-info.java
-- [ ] 驗證依賴方向正確性
+- [x] 建立 domain 層目錄結構
+- [x] 建立 application 層目錄結構
+- [x] 建立 adapters 層目錄結構
+- [x] 建立 infrastructure 層目錄結構
+- [x] 建立各層的 package-info.java
+- [x] 驗證依賴方向正確性
 
 ## 任務描述
 
