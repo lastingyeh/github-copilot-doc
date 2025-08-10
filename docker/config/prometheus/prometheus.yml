@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'tinyurl-monitor'
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # Prometheus 自身監控
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 5s
+    metrics_path: /metrics
+
+  # TinyURL 應用程式監控（當應用程式啟動後）
+  - job_name: 'tinyurl-app'
+    static_configs:
+      - targets: ['host.docker.internal:8080'] # 本地開發時的應用程式
+    scrape_interval: 10s
+    metrics_path: /actuator/prometheus
+    scrape_timeout: 5s
+
+  # PostgreSQL 監控（透過 postgres_exporter，可選）
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Redis 監控（透過 redis_exporter，可選）
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+# 告警規則配置（可選）
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093

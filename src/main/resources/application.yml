@@ -1,0 +1,121 @@
+spring:
+  application:
+    name: tinyurl-api
+
+  # 資料庫配置
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tinyurl_db}
+    username: ${DB_USERNAME:tinyurl_user}
+    password: ${DB_PASSWORD:tinyurl_pass}
+    hikari:
+      minimum-idle: ${DB_POOL_MIN:5}
+      maximum-pool-size: ${DB_POOL_MAX:20}
+      idle-timeout: ${DB_IDLE_TIMEOUT:300000}
+      max-lifetime: ${DB_MAX_LIFETIME:600000}
+      connection-timeout: ${DB_CONNECT_TIMEOUT:30000}
+
+  # JPA 配置
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: ${SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        '[format_sql]': ${FORMAT_SQL:true}
+        '[use_sql_comments]': false
+        '[jdbc.lob.non_contextual_creation]': true
+
+  # Redis 配置
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      timeout: ${REDIS_TIMEOUT:2000ms}
+      password: ${REDIS_PASSWORD:}
+      jedis:
+        pool:
+          max-active: ${REDIS_POOL_MAX_ACTIVE:8}
+          max-idle: ${REDIS_POOL_MAX_IDLE:8}
+          min-idle: ${REDIS_POOL_MIN_IDLE:0}
+          max-wait: ${REDIS_POOL_MAX_WAIT:2000ms}
+
+  # Flyway 資料遷移
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+# 監控與管理端點
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: ${HEALTH_SHOW_DETAILS:when_authorized}
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  health:
+    redis:
+      enabled: true
+    db:
+      enabled: true
+    diskspace:
+      enabled: true
+  server:
+    port: ${MANAGEMENT_PORT:8080}
+
+# 伺服器配置
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  http2:
+    enabled: true
+
+# 日誌配置
+logging:
+  level:
+    '[com.example.tinyurl]': ${LOG_LEVEL:INFO}
+    '[org.springframework.web]': ${WEB_LOG_LEVEL:WARN}
+    '[org.hibernate.SQL]': ${SQL_LOG_LEVEL:WARN}
+    '[org.hibernate.type.descriptor.sql.BasicBinder]': ${SQL_PARAM_LOG_LEVEL:WARN}
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: ${LOG_FILE:logs/tinyurl-api.log}
+    max-size: ${LOG_FILE_MAX_SIZE:100MB}
+    max-history: ${LOG_FILE_MAX_HISTORY:30}
+
+# OpenAPI 文件配置
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: ${SWAGGER_ENABLED:true}
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+
+# 應用程式資訊
+info:
+  app:
+    name: ${spring.application.name}
+    version: @project.version@
+    description: 短網址服務 - 採用 Clean Architecture 實作
+  build:
+    artifact: @project.artifactId@
+    group: @project.groupId@

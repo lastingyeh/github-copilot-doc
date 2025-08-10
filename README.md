@@ -1,91 +1,197 @@
-# 建立專案資料夾
-建立空資料夾，並使用 vscode 開啟
+# TinyURL API - Spring Boot 專案
 
-# 放入需求文件
-1. 建立 `docs/specs` 資料夾
-2. 在資料夾內建立需求文件 `tinyurl-requirements.md` <br/>
-    ![tinyurl-requirements.png](imgs/tinyurl-requirements.png)
-    - 內容參考：[tinyurl-requirements.md](templates/docs/specs/tinyurl-requirements.md)
+這是一個基於 Clean Architecture 架構的短網址服務 API，使用 Spring Boot 3.x 建構。
 
-# 基本設定
-## 設定模式與模型
-> 💡 如果是寫程式的話，Claude Sonnet 模型目前算是表現比較好的選擇之一
+## 專案資訊
 
-![agent-mode.png](imgs/agent-mode.png)
-- 選擇 `Agent` + `Claude Sonnet 4`
+- **專案名稱**: TinyURL API
+- **版本**: 1.0.0-SNAPSHOT
+- **Java 版本**: 17
+- **Spring Boot 版本**: 3.2.0
+- **建置工具**: Maven 3.9.5
+- **架構模式**: Clean Architecture
 
-## 手動建立指示 (instructions)
-> 💡 可以把團隊的開發規範加入，這樣 AI 每次回覆時都會參考
+## 技術棧
 
-1. 點選 `設定 > 指示` <br/>
-  ![instructions-1.png](imgs/instructions-1.png)  
-2. 點選 `新的指示檔案...` <br/>
-  ![instructions-2.png](imgs/instructions-2.png)
-3. 點選 `.github/instructions` <br/>
-  ![instructions-3.png](imgs/instructions-3.png)
-4. 輸入 `development-guidelines` 並按下 enter <br/>
-  ![instructions-4.png](imgs/instructions-4.png)
-5. 就會在 `.github/instructions` 資料夾下，建立 `development-guidelines.instructions.md` <br/>
-  ![instructions-5.png](imgs/instructions-5.png)
-6. 調整內容，並儲存 <br/>
-   ![instructions-6.png](imgs/instructions-6.png) <br/>
-    - 內容參考：[development-guidelines.instructions.md](templates/.github/instructions/development-guidelines.instructions.md)
+### 核心框架
+- **Spring Boot 3.2.0** - 核心應用框架
+- **Spring Data JPA** - 資料持久化
+- **Spring Data Redis** - 快取支援
+- **Spring Boot Actuator** - 監控與管理
+- **Spring Boot Validation** - 資料驗證
 
-## 自動建立提示檔案 (instructions)
-> 💡 讓 AI 讀取整個專案，自動生成 instructions
-1. 點選 `設定 > 指示` <br/>
-  ![auto-instructions-1.png](imgs/auto-instructions-1.png)
-2. 點選 `產生提示...` <br/>
-  ![auto-instructions-2.png](imgs/auto-instructions-2.png)
-3. AI 會分析整個專案並生成或更新 `.github/copilot-instructions.md` <br/>
-  ![auto-instructions-3.png](imgs/auto-instructions-3.png)
+### 資料庫與快取
+- **PostgreSQL 42.6.0** - 主要資料庫
+- **Redis with Jedis** - 分散式快取
+- **Flyway** - 資料庫遷移
+- **H2** - 測試資料庫
 
-## 建立提示檔案 (Prompt)
-> 💡 建立常用的 Prompt，就可以透過快捷鍵使用
+### 測試
+- **Spring Boot Test** - 整合測試
+- **JUnit 5** - 單元測試框架
+- **Testcontainers 1.19.3** - 容器化測試
 
-1. 點選 `設定 > 提示檔案` <br/>
-  ![prompt-file-1.png](imgs/prompt-file-1.png)
-2. 點選 `新增指示檔案...` <br/>
-  ![prompt-file-2.png](imgs/prompt-file-2.png)
-3. 點選 `.github/prompts` <br/>
-  ![prompt-file-3.png](imgs/prompt-file-3.png)
-4. 輸入 `list-tasks` 並按下 enter <br/>
-  ![prompt-file-4.png](imgs/prompt-file-4.png)
-5. 就會在 `.github/instructions` 資料夾下，建立 `list-tasks.prompts.md` <br/>
-  ![prompt-file-5.png](imgs/prompt-file-5.png)
-6. 調整內容，並儲存 <br/>
-  ![prompt-file-6.png](imgs/prompt-file-6.png)
-    - 內容參考：[list-tasks.prompt.md](templates/.github/prompts/list-tasks.prompt.md)
+### 文件與工具
+- **SpringDoc OpenAPI 2.2.0** - API 文件生成
+- **Lombok 1.18.30** - 程式碼簡化
+- **Micrometer Prometheus** - 指標收集
 
-# 產生工作項目
-1. 在聊天視窗輸入 `/`，可以看到剛剛建立的 Prompt <br/>
-  ![list-tasks-1.png](imgs/list-tasks-1.png)
-2. 選擇 `/list-tasks`，並按下 enter 或傳送 <br/>
-  ![list-tasks-2.png](imgs/list-tasks-2.png)
-3. AI 就會跟據 Prompt 的說明，拆解工作任務並將結果寫入 `docs/tasks` 資料夾 (這步驟工作比較多，需要等比較久) <br/>
-  ![list-tasks-3.png](imgs/list-tasks-3.png)
+## 專案結構
 
+```
+src/
+├── main/
+│   ├── java/com/example/tinyurl/
+│   │   ├── TinyUrlApplication.java           # 應用程式進入點
+│   │   ├── domain/                           # 領域層
+│   │   │   ├── model/                        # 領域模型
+│   │   │   └── repository/                   # 領域儲存庫介面
+│   │   ├── application/                      # 應用層
+│   │   │   ├── usecase/                      # 使用案例實作
+│   │   │   └── port/                         # 端口定義
+│   │   │       ├── in/                       # 輸入端口
+│   │   │       └── out/                      # 輸出端口
+│   │   └── infrastructure/                   # 基礎設施層
+│   │       ├── persistence/                  # 資料持久化實作
+│   │       ├── cache/                        # 快取實作
+│   │       ├── web/                          # Web 控制器
+│   │       └── config/                       # 配置類別
+│   └── resources/
+│       └── application.yml                   # 應用程式配置
+└── test/
+    ├── java/com/example/tinyurl/
+    │   └── TinyUrlApplicationTest.java       # 整合測試
+    └── resources/
+        └── application-test.yml              # 測試配置
+```
 
-# 開發
-> 💡 不建議一次處理太多任務，因為 AI 可能會抓不清重點，導致回覆品質下降 <br/>
->    當任務內容很多時，可以運用 `##` 選擇子章節，分批執行
+## 快速開始
 
-## 建立 docker compose
-1. 點開建立 docker compose 的任務 <br/>
-  ![dev-docker-1.png](imgs/dev-docker-1.png)
-2. 在聊天視窗輸入 `##`，可以選擇已經開啟的 markdown 檔案中的章節 <br/>
-  ![dev-docker-2.png](imgs/dev-docker-2.png)
-3. 選擇要執行的章節，並按下 enter 或傳送 <br/>
-  ![dev-docker-3.png](imgs/dev-docker-3.png)
-4. AI 會根據章節內容，產生 docker compose 的內容，並且將服務啟動 <br/>
-  ![dev-docker-4.png](imgs/dev-docker-4.png)
+### 前置需求
+- Java 17+
+- Docker & Docker Compose（用於資料庫和快取）
+- Maven 3.8+（或使用專案提供的 Maven Wrapper）
 
-## 建立專案
-1. 點開建立專案的任務，選擇章節，並按下 enter 或傳送 <br/>
-  ![init-project-1.png](imgs/init-project-1.png)
-2. AI 就會建立出 Spring Boot 專案 <br/>
-  ![init-project-2.png](imgs/init-project-2.png)
-3. 嘗試使用 IDE 啟動服務，或是在聊天視窗輸入 `啟動服務` 並送出，確認程式可以正常運作
+### 1. 克隆專案
+```bash
+git clone <repository-url>
+cd shorturlapi-lab
+```
 
-## Keep Going...
-依照上面的步驟，一步一步將任務完成，就可以完成功能囉～
+### 2. 啟動資料庫與快取服務
+```bash
+docker-compose up -d postgres redis
+```
+
+### 3. 編譯專案
+```bash
+./mvnw clean compile
+```
+
+### 4. 執行測試
+```bash
+./mvnw test
+```
+
+### 5. 啟動應用程式
+```bash
+./mvnw spring-boot:run
+```
+
+### 6. 訪問 API 文件
+- Swagger UI: http://localhost:8080/swagger-ui.html
+- OpenAPI JSON: http://localhost:8080/v3/api-docs
+
+### 7. 監控端點
+- 健康檢查: http://localhost:8080/actuator/health
+- 指標: http://localhost:8080/actuator/metrics
+- Prometheus: http://localhost:8080/actuator/prometheus
+
+## 開發指令
+
+```bash
+# 編譯專案
+./mvnw clean compile
+
+# 執行測試
+./mvnw test
+
+# 打包應用程式
+./mvnw package
+
+# 跳過測試打包
+./mvnw package -DskipTests
+
+# 啟動應用程式（開發模式）
+./mvnw spring-boot:run
+
+# 清理建置產物
+./mvnw clean
+```
+
+## 環境變數
+
+應用程式支援以下環境變數進行配置：
+
+### 資料庫
+- `DB_HOST`: PostgreSQL 主機 (預設: localhost)
+- `DB_PORT`: PostgreSQL 端口 (預設: 5432)
+- `DB_NAME`: 資料庫名稱 (預設: tinyurl_db)
+- `DB_USERNAME`: 資料庫使用者 (預設: tinyurl)
+- `DB_PASSWORD`: 資料庫密碼 (預設: password123)
+
+### 快取
+- `REDIS_HOST`: Redis 主機 (預設: localhost)
+- `REDIS_PORT`: Redis 端口 (預設: 6379)
+
+### 日誌
+- `SQL_LOG_LEVEL`: SQL 日誌級別 (預設: WARN)
+
+## Clean Architecture 層級說明
+
+### Domain Layer（領域層）
+- **model/**: 核心業務實體與值物件
+- **repository/**: 資料存取的抽象介面
+
+### Application Layer（應用層）
+- **usecase/**: 業務邏輯與使用案例實作
+- **port/in/**: 對外提供的服務介面
+- **port/out/**: 對基礎設施的依賴介面
+
+### Infrastructure Layer（基礎設施層）
+- **persistence/**: JPA 實體與資料庫存取實作
+- **cache/**: Redis 快取實作
+- **web/**: REST API 控制器
+- **config/**: Spring 配置類別
+
+## 建置狀態
+
+- [x] Maven 專案結構建立完成
+- [x] pom.xml 依賴配置完成
+- [x] Spring Boot 應用程式主類別
+- [x] Maven Wrapper 配置
+- [x] 基本配置檔案 (application.yml)
+- [x] 測試配置與基本測試類別
+- [x] Clean Architecture 目錄結構
+- [x] 編譯驗證通過
+- [x] 測試執行通過
+- [x] 打包建置通過
+
+## 下一步
+
+此專案骨架已經準備就緒，可以開始進行以下開發工作：
+
+1. **領域模型設計** - 建立 URL 實體與值物件
+2. **資料庫層實作** - 建立 JPA 實體與儲存庫
+3. **快取層實作** - 實作 Redis 快取策略
+4. **業務邏輯開發** - 實作短網址生成與查詢邏輯
+5. **REST API 開發** - 建立 RESTful 端點
+6. **整合測試** - 撰寫全面的整合測試
+
+## 參考資料
+
+- [Spring Boot 官方文件](https://spring.io/projects/spring-boot)
+- [Clean Architecture 參考](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Spring Data JPA 文件](https://spring.io/projects/spring-data-jpa)
+- [Spring Data Redis 文件](https://spring.io/projects/spring-data-redis)
+- [Testcontainers 文件](https://www.testcontainers.org/)

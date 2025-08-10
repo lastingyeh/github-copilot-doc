@@ -1,0 +1,36 @@
+# Docker 環境配置
+spring:
+  # Docker 中的資料庫配置
+  datasource:
+    url: jdbc:postgresql://postgres:5432/${DB_NAME:tinyurl_db}
+    username: ${DB_USERNAME:tinyurl_user}
+    password: ${DB_PASSWORD:tinyurl_pass}
+
+  # Docker 中的 Redis 配置
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+# Docker 環境日誌配置
+logging:
+  level:
+    '[com.example.tinyurl]': INFO
+    '[org.springframework.web]': WARN
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+
+# Docker 環境監控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# OpenAPI 文件配置
+springdoc:
+  swagger-ui:
+    enabled: true
