@@ -66,13 +66,12 @@ applyTo: '**'
 ## 6. 技術
 
 - Java 17
-- Maven: 使用 Maven Wrapper (`mvnw`)
+- Maven
 - Spring Boot 3+
-- Docker: 優先使用新版 `docker compose` 指令語法
 - Lombok Annotations:
     - @Getter, @Setter, @Builder, @Slf4j
     - Avoid field injection
-- SpringDoc OpenAPI 用於文件 (e.g. springdoc-openapi-starter-webmvc-ui)
+- SpringDoc OpenAPI 用於文件
 - Database (如無特殊偏好使用 Postgres):
   - Postgres
   - MongoDB
@@ -109,7 +108,10 @@ applyTo: '**'
 - DTO Fields：@Schema 搭配描述
 
 ## 10. Git Commit 慣例
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0db799f (docs: 新增繁體中文開發指南文件)
 - Commit Message 結構
   ```text
   <type>: <subject>
