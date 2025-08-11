@@ -1,3 +1,33 @@
+# LAB 流程說明
+> 個項目的細節，請查看下面章節
+1. **專案初始化**：建立專案資料夾
+2. **需求準備**：加入需求文件
+3. **AI環境設定**：設定模式與模型 (`Agent` + `Claude Sonnet 4`)
+4. **Instructions、Prompt設定**：加入指示 (Instructions)、提示檔案 (Prompt)
+5. **需求分析**：使用 `/list-requirements` 指令，分析文件產生需求項目
+6. **任務規劃**：使用 `/list-tasks 拆成 12 項子任務` 指令，產生開發工作任務
+7. **程式開發**：使用 `##` 選擇工作任務，依序實現任務
+
+```mermaid
+flowchart TD
+    A[開始] --> B[專案初始化<br/>建立專案資料夾]
+    B --> C[需求準備<br/>加入需求文件]
+    C --> D[AI環境設定<br/>設定模式與模型<br/>Agent + Claude Sonnet 4]
+    D --> E[Instructions、Prompt設定<br/>加入指示檔案與提示檔案]
+    E --> F[需求分析<br/>使用 /list-requirements 指令<br/>分析文件產生需求項目]
+    F --> G[任務規劃<br/>使用 /list-tasks 拆成 12 項子任務 指令<br/>產生開發工作任務]
+    G --> H[程式開發<br/>使用 ## 選擇工作任務<br/>依序實現任務]
+    H --> I{是否所有任務<br/>都已完成?}
+    I -->|否| H
+    I -->|是| J[完成]
+
+    style A fill:#90EE90
+    style J fill:#FFB6C1
+    style F fill:#87CEEB
+    style G fill:#87CEEB
+    style H fill:#DDA0DD
+```
+
 # 建立專案資料夾
 建立空資料夾，並使用 vscode 開啟
 
