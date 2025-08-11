@@ -24,7 +24,8 @@ applyTo: '**'
   - 避免魔術數字（以常數取代）
   - 回傳值優先使用 `Optional`（避免 `null`）
   - 依賴注入採**建構式注入**（禁止欄位 `@Autowired`）
-  - 複雜物件使用 `@Builder`
+  - getter, setter 使用 Lombok `@Getter`/`@Setter` 或是 `@Data`
+  - 複雜物件使用 Lombok `@Builder`
   - 記錄使用 Lombok `@Slf4j`
   - 公共 API 撰寫 JavaDoc，強調**為什麼**（非重述**做了什麼**）
 
