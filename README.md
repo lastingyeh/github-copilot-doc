@@ -14,7 +14,7 @@
 ![agent-mode.png](imgs/agent-mode.png)
 - 選擇 `Agent` + `Claude Sonnet 4`
 
-## 手動建立指示 (instructions)
+## 手動建立指示 (Instructions)
 > 💡 可以把團隊的開發規範加入，這樣 AI 每次回覆時都會參考
 
 1. 點選 `設定 > 指示` <br/>
@@ -23,13 +23,17 @@
   ![instructions-2.png](imgs/instructions-2.png)
 3. 點選 `.github/instructions` <br/>
   ![instructions-3.png](imgs/instructions-3.png)
-4. 輸入 `development-guidelines` 並按下 enter <br/>
+4. 輸入檔名(例如：`development-guidelines`) 並按下 enter <br/>
   ![instructions-4.png](imgs/instructions-4.png)
 5. 就會在 `.github/instructions` 資料夾下，建立 `development-guidelines.instructions.md` <br/>
   ![instructions-5.png](imgs/instructions-5.png)
 6. 調整內容，並儲存 <br/>
    ![instructions-6.png](imgs/instructions-6.png) <br/>
-    - 內容參考：[development-guidelines.instructions.md](templates/.github/instructions/development-guidelines.instructions.md)
+    - 📝 LAB 時．請使用教材提供的 Instructions：
+      - [document.instructions.md](.github/instructions/document.instructions.md)
+      - [git.instructions.md](.github/instructions/git.instructions.md)
+      - [springboot-spec.instructions.md](.github/instructions/springboot-spec.instructions.md)
+      - [tech-stack.instructions.md](.github/instructions/tech-stack.instructions.md)
 
 ## 自動建立提示檔案 (instructions)
 > 💡 讓 AI 讀取整個專案，自動生成 instructions
@@ -49,15 +53,18 @@
   ![prompt-file-2.png](imgs/prompt-file-2.png)
 3. 點選 `.github/prompts` <br/>
   ![prompt-file-3.png](imgs/prompt-file-3.png)
-4. 輸入 `list-tasks` 並按下 enter <br/>
+4. 輸入檔名(例如：`list-tasks`) 並按下 enter <br/>
   ![prompt-file-4.png](imgs/prompt-file-4.png)
 5. 就會在 `.github/instructions` 資料夾下，建立 `list-tasks.prompts.md` <br/>
   ![prompt-file-5.png](imgs/prompt-file-5.png)
 6. 調整內容，並儲存 <br/>
   ![prompt-file-6.png](imgs/prompt-file-6.png)
-    - 內容參考：[list-tasks.prompt.md](templates/.github/prompts/list-tasks.prompt.md)
+    - 📝 LAB 時．請使用教材提供的 Prompt：
+      - [list-requirements.prompt.md](.github/prompts/list-requirements.prompt.md)
+      - [list-tasks.prompt.md](.github/prompts/list-tasks.prompt.md)
 
 # 產生工作項目
+> 💡LAB 先使用 `/list-requirements` 產生需求，再使用 `/list-tasks 拆成 12 項子任務` 產生工作任務
 1. 在聊天視窗輸入 `/`，可以看到剛剛建立的 Prompt <br/>
   ![list-tasks-1.png](imgs/list-tasks-1.png)
 2. 選擇 `/list-tasks`，並按下 enter 或傳送 <br/>
