@@ -9,7 +9,7 @@
 7. **程式開發**：使用 `##` 選擇工作任務，依序實現任務
 
 ```mermaid
-flowchart TD
+flowchart LR
     A[開始] --> B[專案初始化<br/>建立專案資料夾]
     B --> C[需求準備<br/>加入需求文件]
     C --> D[AI環境設定<br/>設定模式與模型<br/>Agent + Claude Sonnet 4]
