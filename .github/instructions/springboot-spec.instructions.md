@@ -72,7 +72,8 @@ src/main/java/com/example/orders
 - 使用 `@DisplayName` 增加可讀性；覆蓋：
   - Positive（成功）
   - Negative（錯誤／例外）
-- **Testcontainers**：Postgres/Redis 由 tech stack 檔定義；此處僅要求 service/adapter 層可在 CI 以容器測試啟動。
+-如涉及外部 I/O，使用 Testcontainers
+  - **Testcontainers**：Postgres/Redis 由 tech stack 檔定義；此處僅要求 service/adapter 層可在 CI 以容器測試啟動。
 
 ## 性能與實務
 - 避免 N+1、必要欄位索引、合理快取 TTL

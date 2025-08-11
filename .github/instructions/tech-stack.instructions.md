@@ -1,52 +1,95 @@
 ---
 applyTo: '**'
 ---
-# 技術棧規範（必選與可選）
+# 技術棧規範
 
-> **語言**：所有輸出一律使用**繁體中文**。
+> **重要**：所有輸出一律使用**繁體中文**，包含程式碼註解和文件。
 
-## 必選（Required）
-- **Java**：17（LTS）
-- **Spring Boot**：3.x
-- **建置**：Maven（必用 Maven Wrapper `mvnw`）
-- **日誌**：SLF4J API + Logback（console + JSON）
-- **資料庫**：PostgreSQL（primary DB）
-- **快取**：Redis（cache/session）
-- **資料遷移**：Flyway
-- **監控**：Spring Boot Actuator + Micrometer + Prometheus
-- **健康檢查**：`/actuator/health` + 自訂 `HealthIndicator`
-- **測試**：JUnit 5 + Mockito + **Testcontainers（Postgres/Redis）**
-- **OpenAPI**：SpringDoc（如 `springdoc-openapi-starter-webmvc-ui`）
-- **部署**：Docker Compose（至少包含 `app、Postgres、Redis、Prometheus、Grafana`）
-- **預設埠/名稱**：
-  - App `8080`；DB 名稱 `orders_db`；Redis `6379`；Prometheus `9090`；Grafana `3000`
+## 必選技術棧（Required）
 
-## 可選（Optional）
-- **訊息佇列**：RabbitMQ / Kafka /（GCP）Pub/Sub
-- **額外儲存**：MongoDB（如需文件型資料）
-- **快取應用**：Session 存放、查詢結果快取、分散式鎖
-- **觀測性加值**：Trace（OpenTelemetry Collector）、自訂 Metrics、Log 轉送（EFK/Vector）
+### 核心框架
+- **Java 版本**：17 LTS（明確在 `pom.xml` 中指定）
+- **Spring Boot**：3.x 最新穩定版
+- **建置工具**：Maven + Maven Wrapper (`./mvnw`)
 
-## 組態與環境變數（所有環境必須可覆蓋）
-- **DB**：`DB_HOST`, `DB_PORT`, `DB_NAME=orders_db`, `DB_USERNAME`, `DB_PASSWORD`
-- **Redis**：`REDIS_HOST`, `REDIS_PORT=6379`
-- **Logging**：`LOG_FORMAT` = `console` / `json`
-- **管理埠**（可選）：`MANAGEMENT_PORT`
-- **Prometheus**：必須啟用 `/actuator/prometheus` 供抓取
+### 資料層
+- **主要資料庫**：PostgreSQL
+- **資料庫版控**：Liquibase（changelog 檔案）
+- **資料存取**：Spring Data JPA
 
-## 產物要求（當我要求 scaffold / sample）
-1. **`pom.xml`**：明確列出相依與外掛**版本**（Spring Boot 3.x、Lombok、SpringDoc、Flyway、Micrometer、Testcontainers...）。
-2. **`application.yml`**：以環境變數覆蓋（如上），含 DB、Redis、Actuator、Logging、OpenAPI。
-3. **`logback-spring.xml`**：提供 console 與 JSON 兩種輸出模式（以 Profile 或 `LOG_FORMAT` 切換）。
-4. **`Dockerfile` + `docker-compose.yml`**：
-   - 服務：`app、postgres、redis、prometheus、grafana`
-   - Prometheus 目標：`app: /actuator/prometheus`
-   - 預設埠與帳密（若需要）以環境變數提供。
-5. **監控**：啟動後 Grafana 可匯入 Micrometer 預設儀表板。
-6. **Orders 範例**：`Create / Get（含 Redis 快取） / List` 完整骨架（Controller + Use case + Ports + Adapters + Infra 實作）。
-7. **CI/CD 友善**：本地與 CI 可直接執行 Testcontainers 測試。
+### 日誌與監控
+- **日誌框架**：SLF4J API + Logback 實作
+- **日誌格式**：支援 console 和 JSON 兩種模式
+- **應用監控**：Spring Boot Actuator + Micrometer
+- **健康檢查**：`/actuator/health` + 自訂 HealthIndicator
 
-## 效能與最佳實務（跨技術棧）
-- 預設為分頁查詢與投影（避免大 ResultSet）
-- 為常用查詢建立索引；以 TTL 與 key 設計管理 Redis 快取
-- 合理使用批次寫入與外鍵約束；避免過度雙寫
+### 測試策略
+- **單元測試**：JUnit 5 + Mockito
+- **整合測試**：Testcontainers (PostgreSQL + Redis)
+
+### API 文件
+- **OpenAPI 規範**：SpringDoc (`springdoc-openapi-starter-webmvc-ui`)
+- **Swagger UI**：自動產生並可存取
+
+### 容器化
+- **容器**：Docker + Docker Compose
+- **語法**：使用新版 `docker compose` 指令
+
+## 可選技術棧 (Optional)
+
+### 訊息處理
+- **訊息佇列**：RabbitMQ / Apache Kafka / GCP Pub/Sub
+
+### 額外儲存
+- **文件資料庫**：MongoDB（當需要文件型資料時）
+- **快取系統**：Redis（Session 儲存、查詢快取、分散式鎖）
+
+### 進階監控
+- **指標收集**：Prometheus + Grafana
+- **鏈路追蹤**：OpenTelemetry Collector
+- **日誌聚合**：EFK Stack / Vector
+
+## 環境組態規範
+
+### 必須支援的環境變數
+以下所有組態項目必須可透過環境變數覆蓋：
+```yaml
+# 資料庫連線
+DB_HOST: localhost
+DB_PORT: 5432
+DB_NAME: myapp
+DB_USERNAME: postgres
+DB_PASSWORD: password
+
+# Redis 連線
+REDIS_HOST: localhost
+REDIS_PORT: 6379
+REDIS_PASSWORD: ""
+
+# 日誌組態
+LOG_FORMAT: console  # console | json
+
+# 管理埠口
+MANAGEMENT_PORT: 8081  # 可選
+
+# Prometheus 整合
+MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: health,info,prometheus
+```
+
+## 效能與最佳實務
+
+### 資料存取
+- **查詢分頁**：預設實作分頁查詢，避免大量資料回傳
+- **投影查詢**：使用 DTO 投影，僅選取必要欄位
+- **索引策略**：為常用查詢條件建立合適索引
+
+### 快取策略
+- **Redis TTL**：為所有快取設定合理的過期時間
+- **快取鍵設計**：使用有意義且唯一的鍵名規範
+- **失效策略**：實作快取失效機制
+
+### 資料庫優化
+- **批次操作**：使用批次寫入提升效能
+- **約束設計**：合理使用外鍵約束
+- **避免 N+1**：使用適當的 fetch 策略
+
