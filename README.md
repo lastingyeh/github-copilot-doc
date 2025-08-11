@@ -21,11 +21,16 @@ flowchart TD
     I -->|否| H
     I -->|是| J[完成]
 
-    style A fill:#90EE90
-    style J fill:#FFB6C1
-    style F fill:#87CEEB
-    style G fill:#87CEEB
-    style H fill:#DDA0DD
+    style A fill:#90EE90,color:#000000
+    style B fill:#ffffff,color:#000000
+    style C fill:#ffffff,color:#000000
+    style D fill:#ffffff,color:#000000
+    style E fill:#ffffff,color:#000000
+    style F fill:#87CEEB,color:#000000
+    style G fill:#87CEEB,color:#000000
+    style H fill:#DDA0DD,color:#000000
+    style I fill:#ffffff,color:#000000
+    style J fill:#FFB6C1,color:#000000
 ```
 
 # 建立專案資料夾
@@ -48,7 +53,7 @@ flowchart TD
 > 💡 可以把團隊的開發規範加入，這樣 AI 每次回覆時都會參考
 
 1. 點選 `設定 > 指示` <br/>
-  ![instructions-1.png](imgs/instructions-1.png)  
+  ![instructions-1.png](imgs/instructions-1.png)
 2. 點選 `新的指示檔案...` <br/>
   ![instructions-2.png](imgs/instructions-2.png)
 3. 點選 `.github/instructions` <br/>

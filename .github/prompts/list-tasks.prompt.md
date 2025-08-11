@@ -71,7 +71,7 @@ mode: agent
       - Request Example: Sample JSON request
       - Response Parameters: Response DTO field details
       - Response Example: Sample JSON response
-- `## 執行步驟`：提供清晰的逐步操作指示，包含以 PlantUML 繪製的流程圖與具體步驟 (優先使用 sequence-diagram)。
+- `## 執行步驟`：提供清晰的逐步操作指示，包含以 Mermaid 繪製的流程圖與具體步驟 (優先使用 sequence-diagram)。
 - `## 測試情境`：(Optional) 非基礎設施與專案初始化的任務，才需標示。為了確保功能品質與穩定性，需要撰寫單元測試案例，案例必須包含正向與反向的測試案例。
 - `## 預期輸入`：執行此任務前需要具備的檔案、資料、或前置任務。
 - `## 預期輸出`：任務完成後應該產出的交付物（例如：新的原始碼檔案、修改過的設定檔、可運行的服務等）。
