@@ -1,4 +1,51 @@
 services:
+  # TinyURL 應用程式服務
+  tinyurl-api:
+    image: openjdk:17-jdk-slim
+    container_name: tinyurl-api
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      # 資料庫配置
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-tinyurl_db}
+      DB_USERNAME: ${DB_USERNAME:-tinyurl_user}
+      DB_PASSWORD: ${DB_PASSWORD:-tinyurl_pass}
+      # Redis 配置
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      # 應用程式配置
+      SERVER_PORT: 8080
+      ENVIRONMENT: docker
+      # 日誌配置
+      LOG_LEVEL: INFO
+      LOG_FORMAT: json
+    ports:
+      - '${SERVER_PORT:-8080}:8080'
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+    command: >
+      bash -c "
+        ./mvnw clean compile &&
+        ./mvnw spring-boot:run -Dspring-boot.run.profiles=docker
+      "
+    networks:
+      - tinyurl-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        ['CMD-SHELL', 'curl -f http://localhost:8080/actuator/health || exit 1']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
   # PostgreSQL 資料庫服務
   postgres:
     image: postgres:15-alpine

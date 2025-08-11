@@ -1,0 +1,76 @@
+package com.example.tinyurl.infrastructure.cache.redis;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.actuator.health.Health;
+import org.springframework.boot.actuator.health.HealthIndicator;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
+
+import java.time.Duration;
+
+/**
+ * Redis 快取健康檢查器
+ *
+ * 檢查 Redis 連線狀態與快取服務可用性
+ * 提供詳細的健康狀態資訊給 Actuator
+ */
+@Component("redisCache")
+@RequiredArgsConstructor
+@Slf4j
+public class RedisCacheHealthIndicator implements HealthIndicator {
+
+    private final RedisTemplate<String, Object> redisTemplate;
+    private static final String HEALTH_CHECK_KEY = "tinyurl:health:check";
+    private static final String HEALTH_CHECK_VALUE = "OK";
+    private static final Duration HEALTH_CHECK_TIMEOUT = Duration.ofSeconds(2);
+
+    @Override
+    public Health health() {
+        try {
+            // 測試 Redis 連線
+            long startTime = System.currentTimeMillis();
+
+            // 執行 ping 測試
+            String pong = redisTemplate.getConnectionFactory()
+                .getConnection()
+                .ping();
+
+            long pingTime = System.currentTimeMillis() - startTime;
+
+            // 執行讀寫測試
+            startTime = System.currentTimeMillis();
+            redisTemplate.opsForValue().set(HEALTH_CHECK_KEY, HEALTH_CHECK_VALUE, HEALTH_CHECK_TIMEOUT);
+            String readValue = (String) redisTemplate.opsForValue().get(HEALTH_CHECK_KEY);
+            long readWriteTime = System.currentTimeMillis() - startTime;
+
+            // 清理測試資料
+            redisTemplate.delete(HEALTH_CHECK_KEY);
+
+            // 檢查結果
+            if ("PONG".equals(pong) && HEALTH_CHECK_VALUE.equals(readValue)) {
+                return Health.up()
+                    .withDetail("ping", pong)
+                    .withDetail("pingTime", pingTime + "ms")
+                    .withDetail("readWriteTime", readWriteTime + "ms")
+                    .withDetail("status", "可正常讀寫")
+                    .build();
+            } else {
+                return Health.down()
+                    .withDetail("ping", pong)
+                    .withDetail("readValue", readValue)
+                    .withDetail("expectedValue", HEALTH_CHECK_VALUE)
+                    .withDetail("reason", "讀寫測試失敗")
+                    .build();
+            }
+
+        } catch (Exception e) {
+            log.warn("Redis 健康檢查失敗", e);
+            return Health.down()
+                .withDetail("error", e.getMessage())
+                .withDetail("errorClass", e.getClass().getSimpleName())
+                .withDetail("status", "連線失敗")
+                .build();
+        }
+    }
+}

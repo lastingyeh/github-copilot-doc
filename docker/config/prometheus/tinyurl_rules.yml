@@ -1,0 +1,62 @@
+groups:
+  - name: tinyurl.rules
+    rules:
+      # 高錯誤率告警
+      - alert: HighErrorRate
+        expr: rate(http_server_requests_total{status=~"5.."}[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'TinyURL API 高錯誤率'
+          description: '5xx 錯誤率在過去 5 分鐘內超過 10%'
+
+      # 回應時間過長告警
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_server_requests_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'TinyURL API 回應時間過長'
+          description: '95% 的請求回應時間超過 1 秒'
+
+      # 快取命中率過低告警
+      - alert: LowCacheHitRate
+        expr: (rate(tinyurl_cache_hits_total[5m]) / (rate(tinyurl_cache_hits_total[5m]) + rate(tinyurl_cache_misses_total[5m]))) < 0.7
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: '快取命中率過低'
+          description: '快取命中率低於 70%'
+
+      # 服務不可用告警
+      - alert: ServiceDown
+        expr: up{job="tinyurl-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: 'TinyURL API 服務不可用'
+          description: 'TinyURL API 服務已停止運行'
+
+      # 記憶體使用過高告警
+      - alert: HighMemoryUsage
+        expr: (jvm_memory_used_bytes{area="heap"} / jvm_memory_max_bytes{area="heap"}) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 'JVM 記憶體使用過高'
+          description: '堆記憶體使用超過 80%'
+
+      # 資料庫連線數過高告警
+      - alert: HighDatabaseConnections
+        expr: hikaricp_connections_active > 15
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: '資料庫連線數過高'
+          description: '活躍資料庫連線數超過 15'

@@ -19,6 +19,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     show-sql: ${SHOW_SQL:false}
     properties:
       hibernate:
@@ -26,6 +29,18 @@ spring:
         '[format_sql]': ${FORMAT_SQL:true}
         '[use_sql_comments]': false
         '[jdbc.lob.non_contextual_creation]': true
+        # 批次處理優化
+        '[jdbc.batch_size]': 20
+        '[jdbc.batch_versioned_data]': true
+        '[order_inserts]': true
+        '[order_updates]': true
+        # 快取設定
+        '[cache.use_second_level_cache]': false
+        '[cache.use_query_cache]': false
+        # 連線池統計
+        '[generate_statistics]': false
+        # 查詢優化
+        '[jdbc.time_zone]': UTC
 
   # Redis 配置
   data:
@@ -41,6 +56,18 @@ spring:
           min-idle: ${REDIS_POOL_MIN_IDLE:0}
           max-wait: ${REDIS_POOL_MAX_WAIT:2000ms}
 
+# TinyURL 應用程式配置
+tinyurl:
+  cache:
+    default-ttl: ${CACHE_DEFAULT_TTL:PT1H}        # 預設快取時間：1小時
+    popular-ttl: ${CACHE_POPULAR_TTL:PT24H}       # 熱門快取時間：24小時
+    popular-threshold: ${CACHE_POPULAR_THRESHOLD:100}  # 熱門閾值：100次存取
+    key-prefix: ${CACHE_KEY_PREFIX:tinyurl:short:}
+    stats-prefix: ${CACHE_STATS_PREFIX:tinyurl:stats:}
+    enable-statistics: ${CACHE_ENABLE_STATS:true}
+    batch-size: ${CACHE_BATCH_SIZE:1000}
+    health-check-timeout: ${CACHE_HEALTH_TIMEOUT:PT2S}
+
   # Flyway 資料遷移
   flyway:
     enabled: true
@@ -52,23 +79,43 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus,metrics
+        include: health,info,prometheus,metrics,loggers,env,configprops
       base-path: /actuator
   endpoint:
     health:
-      show-details: ${HEALTH_SHOW_DETAILS:when_authorized}
+      show-details: always
+      show-components: always
+    info:
+      enabled: true
     prometheus:
+      enabled: true
+    metrics:
       enabled: true
   prometheus:
     metrics:
       export:
         enabled: true
+        step: 30s
+  metrics:
+    distribution:
+      percentiles-histogram:
+        '[http.server.requests]': true
+      percentiles:
+        '[http.server.requests]': 0.5, 0.95, 0.99
+      slo:
+        '[http.server.requests]': 10ms,50ms,100ms,200ms,500ms,1s,2s,5s
+  observations:
+    key-values:
+      application: ${spring.application.name}
+      environment: ${ENVIRONMENT:local}
   health:
     redis:
       enabled: true
     db:
       enabled: true
     diskspace:
+      enabled: true
+    ping:
       enabled: true
   server:
     port: ${MANAGEMENT_PORT:8080}
@@ -119,3 +166,8 @@ info:
   build:
     artifact: @project.artifactId@
     group: @project.groupId@
+    time: @maven.build.timestamp@
+  java:
+    version: @java.version@
+  environment:
+    name: ${ENVIRONMENT:local}

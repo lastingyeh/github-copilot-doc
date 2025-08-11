@@ -1,0 +1,172 @@
+{
+  "info": {
+    "name": "TinyURL API",
+    "description": "TinyURL 短網址服務 API 測試集合",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "健康檢查",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/actuator/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["actuator", "health"]
+        },
+        "description": "檢查應用程式健康狀態"
+      },
+      "response": []
+    },
+    {
+      "name": "建立短網址",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"longUrl\": \"https://github.com/example/project\",\n  \"ttlSeconds\": 3600\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/urls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "urls"]
+        },
+        "description": "建立新的短網址"
+      },
+      "response": [
+        {
+          "name": "建立成功",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"longUrl\": \"https://github.com/example/project\",\n  \"ttlSeconds\": 3600\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/urls",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "urls"]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"short_code\": \"a1B2c3\",\n  \"long_url\": \"https://github.com/example/project\",\n  \"short_url\": \"http://localhost:8080/a1B2c3\",\n  \"created_at\": [2025,8,11,13,17,7,201577503],\n  \"ttl_seconds\": 3600\n}"
+        }
+      ]
+    },
+    {
+      "name": "查詢 URL 資訊",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/urls/{{shortCode}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "urls", "{{shortCode}}"]
+        },
+        "description": "根據短網址代碼查詢原始 URL 資訊"
+      },
+      "response": []
+    },
+    {
+      "name": "重定向測試",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/{{shortCode}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["{{shortCode}}"]
+        },
+        "description": "測試短網址重定向功能"
+      },
+      "response": []
+    },
+    {
+      "name": "錯誤處理測試 - 無效 URL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"longUrl\": \"invalid-url\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/urls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "urls"]
+        },
+        "description": "測試無效 URL 的錯誤處理"
+      },
+      "response": []
+    },
+    {
+      "name": "錯誤處理測試 - 不存在的短網址",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/urls/nonexistent",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "urls", "nonexistent"]
+        },
+        "description": "測試查詢不存在短網址的錯誤處理"
+      },
+      "response": []
+    },
+    {
+      "name": "Prometheus 指標",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/actuator/prometheus",
+          "host": ["{{baseUrl}}"],
+          "path": ["actuator", "prometheus"]
+        },
+        "description": "獲取 Prometheus 格式的應用程式指標"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "shortCode",
+      "value": "",
+      "type": "string",
+      "description": "請先建立短網址後，將 short_code 複製到這裡"
+    }
+  ]
+}

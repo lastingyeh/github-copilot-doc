@@ -13,21 +13,23 @@ import java.util.Objects;
 /**
  * URL 聚合根
  *
- * <p>代表短網址與長網址的映射關係，是 TinyURL 領域的核心實體。
+ * <p>
+ * 代表短網址與長網址的映射關係，是 TinyURL 領域的核心實體。
  * 負責維護以下業務不變量：
  * <ul>
- *   <li>短網址碼的唯一性</li>
- *   <li>存取次數的一致性</li>
- *   <li>時間戳的正確性</li>
- *   <li>業務事件的觸發</li>
+ * <li>短網址碼的唯一性</li>
+ * <li>存取次數的一致性</li>
+ * <li>時間戳的正確性</li>
+ * <li>業務事件的觸發</li>
  * </ul>
  *
- * <p>聚合根特性：
+ * <p>
+ * 聚合根特性：
  * <ul>
- *   <li>不可變性：所有修改都返回新實例</li>
- *   <li>封裝性：內部狀態只能透過業務方法修改</li>
- *   <li>一致性：維護聚合內的業務規則</li>
- *   <li>事件驅動：重要狀態變更觸發領域事件</li>
+ * <li>不可變性：所有修改都返回新實例</li>
+ * <li>封裝性：內部狀態只能透過業務方法修改</li>
+ * <li>一致性：維護聚合內的業務規則</li>
+ * <li>事件驅動：重要狀態變更觸發領域事件</li>
  * </ul>
  */
 public class Url {
@@ -43,7 +45,7 @@ public class Url {
      * 私有建構子，只能透過工廠方法建立
      */
     private Url(ShortCode shortCode, LongUrl longUrl, LocalDateTime createdAt,
-               LocalDateTime accessedAt, int accessCount, List<DomainEvent> domainEvents) {
+            LocalDateTime accessedAt, int accessCount, List<DomainEvent> domainEvents) {
         this.shortCode = Objects.requireNonNull(shortCode, "短網址碼不能為 null");
         this.longUrl = Objects.requireNonNull(longUrl, "長網址不能為 null");
         this.createdAt = Objects.requireNonNull(createdAt, "建立時間不能為 null");
@@ -55,7 +57,7 @@ public class Url {
     /**
      * 建立新的 URL 映射
      *
-     * @param longUrl 長網址
+     * @param longUrl   長網址
      * @param shortCode 短網址碼
      * @return 新的 Url 實例
      * @throws IllegalArgumentException 當參數無效時
@@ -69,6 +71,27 @@ public class Url {
         events.add(UrlCreatedEvent.now(shortCode, longUrl));
 
         return new Url(shortCode, longUrl, now, null, 0, events);
+    }
+
+    /**
+     * 重建已存在的 URL 實例（用於從持久化儲存載入）
+     *
+     * @param shortCode   短網址碼
+     * @param longUrl     長網址
+     * @param createdAt   建立時間
+     * @param accessedAt  最後存取時間
+     * @param accessCount 存取次數
+     * @return 重建的 Url 實例
+     * @throws IllegalArgumentException 當參數無效時
+     */
+    public static Url restore(ShortCode shortCode, LongUrl longUrl, LocalDateTime createdAt,
+            LocalDateTime accessedAt, int accessCount) {
+        Objects.requireNonNull(shortCode, "短網址碼不能為 null");
+        Objects.requireNonNull(longUrl, "長網址不能為 null");
+        Objects.requireNonNull(createdAt, "建立時間不能為 null");
+
+        // 重建時不包含領域事件，因為這些是歷史資料
+        return new Url(shortCode, longUrl, createdAt, accessedAt, accessCount, new ArrayList<>());
     }
 
     /**
@@ -169,8 +192,10 @@ public class Url {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
         Url url = (Url) obj;
         return Objects.equals(shortCode, url.shortCode);
     }
@@ -183,11 +208,11 @@ public class Url {
     @Override
     public String toString() {
         return "Url{" +
-               "shortCode=" + shortCode +
-               ", longUrl=" + longUrl +
-               ", createdAt=" + createdAt +
-               ", accessedAt=" + accessedAt +
-               ", accessCount=" + accessCount +
-               '}';
+                "shortCode=" + shortCode +
+                ", longUrl=" + longUrl +
+                ", createdAt=" + createdAt +
+                ", accessedAt=" + accessedAt +
+                ", accessCount=" + accessCount +
+                '}';
     }
 }

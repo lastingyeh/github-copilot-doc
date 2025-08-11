@@ -108,10 +108,6 @@ applyTo: '**'
 - DTO Fields：@Schema 搭配描述
 
 ## 10. Git Commit 慣例
-<<<<<<< HEAD
-
-=======
->>>>>>> 0db799f (docs: 新增繁體中文開發指南文件)
 - Commit Message 結構
   ```text
   <type>: <subject>
