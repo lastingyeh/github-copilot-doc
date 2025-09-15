@@ -1,0 +1,91 @@
+services:
+  # PostgreSQL 資料庫服務
+  postgres:
+    image: postgres:15-alpine
+    container_name: tinyurl-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-tinyurl}
+      POSTGRES_USER: ${DB_USERNAME:-tinyurl_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-tinyurl_password}
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+    ports:
+      - '${DB_PORT:-5432}:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - tinyurl-network
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${DB_USERNAME:-tinyurl_user} -d ${DB_NAME:-tinyurl}',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Redis 快取服務
+  redis:
+    image: redis:7-alpine
+    container_name: tinyurl-redis
+    command: ['redis-server', '/usr/local/etc/redis/redis.conf']
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis_data:/data
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - tinyurl-network
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # 用於開發環境的管理工具（可選）
+  adminer:
+    image: adminer:4-standalone
+    container_name: tinyurl-adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+      ADMINER_DESIGN: pepa-linha
+    ports:
+      - '8080:8080'
+    networks:
+      - tinyurl-network
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles:
+      - dev-tools
+
+volumes:
+  # PostgreSQL 資料持久化
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/postgres
+
+  # Redis 資料持久化
+  redis_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/redis
+
+networks:
+  # TinyURL 服務專用網路
+  tinyurl-network:
+    driver: bridge
+    name: tinyurl-network

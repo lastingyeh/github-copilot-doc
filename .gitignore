@@ -1,2 +1,40 @@
 .DS_Store
 /.idea/
+
+# Docker 與環境相關
+.env
+data/
+logs/
+*.log
+
+# Java 專案相關
+target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Spring Boot 相關
+application-local.yml
+application-local.properties
+
+# IDE 相關
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# 作業系統相關
+.DS_Store
+Thumbs.db
+
+# 暫存檔案
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# 測試相關
+test-results/
+coverage/
