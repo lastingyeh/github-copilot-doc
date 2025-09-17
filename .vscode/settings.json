@@ -12,5 +12,6 @@
     ".tmp": "plaintext",
     ".png": "image",
     "README.md": "readme"
-  }
+  },
+  "markdown.validate.enabled": true
 }
