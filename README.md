@@ -126,7 +126,7 @@ TinyURL Lab 是一個完整的實戰專案，展示如何使用 GitHub Copilot �
 
 **開發環境**：Java 17 + Spring Boot 3.x + PostgreSQL + Redis + Docker
 
-**完整指南**：[res/tinyurl-lab.md/README.md](res/tinyurl-lab.md/README.md)
+**完整指南**：[res/tinyurl-lab.md/README.md](res/tinyurl-lab/README.md)
 
 ### 3.3 Instructions/Prompts 設定
 
@@ -180,7 +180,7 @@ TinyURL Lab 是一個完整的實戰專案，展示如何使用 GitHub Copilot �
 **核心資源**：
 
 - [Spec Kit 完整指南](res/spec-kit/README.md)
-- [TinyURL Lab 實戰指南](res/tinyurl-lab.md/README.md)
+- [TinyURL Lab 實戰指南](res/tinyurl-lab/README.md)
 - [Podcast 開發流程範例](res/spec-kit/case_podcase.md)
 
 **開發規範**：
@@ -199,7 +199,7 @@ TinyURL Lab 是一個完整的實戰專案，展示如何使用 GitHub Copilot �
 3. **導入 Instructions**：將 `.github/instructions/` 下的規範檔案加入 Copilot 設定
 4. **選擇學習路徑**：
    - **理論學習**：從 [Spec Kit 指南](res/spec-kit/README.md) 開始
-   - **實戰演練**：直接進入 [TinyURL Lab](res/tinyurl-lab.md/README.md)
+   - **實戰演練**：直接進入 [TinyURL Lab](res/tinyurl-lab/README.md)
 
 ## 貢獻指南
 

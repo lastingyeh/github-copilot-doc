@@ -65,10 +65,10 @@ flowchart TD
 6. 調整內容，並儲存 <br/>
    ![instructions-6.png](imgs/instructions-6.png) <br/>
     - 📝 LAB 時．請使用教材提供的 Instructions：
-      - [document.instructions.md](.github/instructions/document.instructions.md)
-      - [git.instructions.md](.github/instructions/git.instructions.md)
-      - [springboot-spec.instructions.md](.github/instructions/springboot-spec.instructions.md)
-      - [tech-stack.instructions.md](.github/instructions/tech-stack.instructions.md)
+      - [document.instructions.md](../../.github/instructions/document.instructions.md)
+      - [git.instructions.md](../../.github/instructions/git.instructions.md)
+      - [springboot-spec.instructions.md](../../.github/instructions/springboot-spec.instructions.md)
+      - [tech-stack.instructions.md](../../.github/instructions/tech-stack.instructions.md)
 
 ## 自動建立提示檔案 (instructions)
 > 💡 讓 AI 讀取整個專案，自動生成 instructions
@@ -95,8 +95,8 @@ flowchart TD
 6. 調整內容，並儲存 <br/>
   ![prompt-file-6.png](imgs/prompt-file-6.png)
     - 📝 LAB 時．請使用教材提供的 Prompt：
-      - [list-requirements.prompt.md](.github/prompts/list-requirements.prompt.md)
-      - [list-tasks.prompt.md](.github/prompts/list-tasks.prompt.md)
+      - [list-requirements.prompt.md](../../.github/prompts/list-requirements.prompt.md)
+      - [list-tasks.prompt.md](../../.github/prompts/list-tasks.prompt.md)
 
 # 產生工作項目
 > 💡LAB 操作流程：
