@@ -77,7 +77,7 @@ Spec Kit 是一個創新的規格驅動開發框架，透過將規格文件轉�
 
 規格驅動開發 (Spec-Driven Development, SDD) 的核心理念在於**讓規格本身變成可執行的**，將規格從靜態參考文件提升為開發流程的核心驅動力。
 
-**完整指南**：[res/spec-kit/README.md](res/spec-kit/README.md)
+**學習參考整理**：[res/spec-kit/README.md](res/spec-kit/README.md)
 
 ### 2.2 多步驟優化流程：/specify → /plan → /tasks → /implement
 
@@ -179,7 +179,8 @@ TinyURL Lab 是一個完整的實戰專案，展示如何使用 GitHub Copilot �
 
 **核心資源**：
 
-- [Spec Kit 完整指南](res/spec-kit/README.md)
+- [[Github] spec-kit](https://github.com/github/spec-kit)
+- [Spec Kit 學習參考整理](res/spec-kit/README.md)
 - [TinyURL Lab 實戰指南](res/tinyurl-lab/README.md)
 - [Podcast 開發流程範例](res/spec-kit/case_podcase.md)
 
