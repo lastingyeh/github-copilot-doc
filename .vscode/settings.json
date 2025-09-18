@@ -1,17 +1,15 @@
 {
   "github.copilot.enable": {
-    "*": true,
+    "*": false,
     "plaintext": false,
-    "markdown": true,
+    "markdown": false,
     "scminput": false,
     "image": false,
     "readme": false
   },
-  "files.associations": {
-    ".env*": "plaintext",
-    ".tmp": "plaintext",
-    ".png": "image",
-    "README.md": "readme"
-  },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    { "text": "Always include a list of key changes." },
+    { "file": "guidance/commit-message-guidelines.md" }
+  ],
   "markdown.validate.enabled": true
 }
