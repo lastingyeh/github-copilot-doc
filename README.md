@@ -1,215 +1,138 @@
 # GitHub Copilot 文件與實驗室指南
 
-> 本專案提供 GitHub Copilot 的進階使用指南、最佳實務以及完整的實戰演練框架。
+> 本專案以透過 GitHub Copilot 實現的進階使用指南、最佳實務為目標：
+> 1. 以 [Github Spec Kit](https://github.com/github/spec-kit) (目前以整合教學內容為主，後續會陸續釋出實作細節與應用)
+> 2. 以 Tiny URL 系統設計為例，內部自行設計以 **Spec driven** 的實戰框架做為核心實現
+>
+> 展示如何在企業級專案中有效運用 GitHub Copilot 進行規格驅動開發（Spec-Driven Development, SDD）。
 
 ## 目錄
 
-- [1. 開發規範與指導原則](#1-開發規範與指導原則)
-
-  - [1.1 技術棧規範](#11-技術棧規範)
-  - [1.2 Spring Boot 框架規範](#12-spring-boot-框架規範)
-  - [1.3 文件寫作原則](#13-文件寫作原則)
-  - [1.4 Git 提交與 PR 規範](#14-git-提交與-pr-規範)
-
-- [2. Spec Kit（規格驅動開發框架）](#2-spec-kit規格驅動開發框架)
-
-  - [2.1 概述與設計哲學](#21-概述與設計哲學)
-  - [2.2 多步驟優化流程：/specify → /plan → /tasks → /implement](#22-多步驟優化流程specify--plan--tasks--implement)
-  - [2.3 Constitution（憲法）與企業治理](#23-constitution憲法與企業治理)
-  - [2.4 架構與專案目錄](#24-架構與專案目錄)
-  - [2.5 安裝與快速開始](#25-安裝與快速開始)
-  - [2.6 品質控制與合規（CI 範本）](#26-品質控制與合規ci-範本)
-  - [2.7 最佳實務與常見問題](#27-最佳實務與常見問題)
-
-- [3. TinyURL Lab（實戰專案）](#3-tinyurl-lab實戰專案)
-
-  - [3.1 專案背景與學習目標](#31-專案背景與學習目標)
-  - [3.2 環境需求與初始化](#32-環境需求與初始化)
-  - [3.3 Instructions/Prompts 設定](#33-instructionsprompts-設定)
-  - [3.4 需求分析：/list-requirements](#34-需求分析list-requirements)
-  - [3.5 任務拆解：/list-tasks + 章節選擇##](#35-任務拆解list-tasks--章節選擇)
-  - [3.6 實作與驗證（含測試與迭代）](#36-實作與驗證含測試與迭代)
-  - [3.7 進階功能與部署路線](#37-進階功能與部署路線)
-  - [3.8 常見問題與最佳實務](#38-常見問題與最佳實務)
-
-- [4. 核心工具與資源](#4-核心工具與資源)
-  - [4.1 Copilot Prompts 工具集](#41-copilot-prompts-工具集)
-  - [4.2 開發環境配置](#42-開發環境配置)
-  - [4.3 參考文件與範例](#43-參考文件與範例)
+- [GitHub Copilot 文件與實驗室指南](#github-copilot-文件與實驗室指南)
+  - [目錄](#目錄)
+  - [第一部分：Github Spec Kit（規格驅動開發框架）](#第一部分github-spec-kit規格驅動開發框架)
+    - [1.1 框架介紹](#11-框架介紹)
+    - [1.2 核心流程與用法](#12-核心流程與用法)
+    - [1.3 快速開始](#13-快速開始)
+    - [1.4 核心資源](#14-核心資源)
+  - [第二部分：TinyURL Lab（自行設計 + 實戰範例專案）](#第二部分tinyurl-lab自行設計--實戰範例專案)
+    - [2.1 專案介紹](#21-專案介紹)
+    - [2.2 Copilot 驅動開發流程](#22-copilot-驅動開發流程)
+    - [2.3 環境設定與實作](#23-環境設定與實作)
+    - [2.4 核心資源](#24-核心資源)
+  - [附錄：開發規範與指導原則](#附錄開發規範與指導原則)
+    - [A.1 技術棧規範](#a1-技術棧規範)
+    - [A.2 Spring Boot 框架規範](#a2-spring-boot-框架規範)
+    - [A.3 文件寫作原則](#a3-文件寫作原則)
+    - [A.4 Git 提交與 PR 規範](#a4-git-提交與-pr-規範)
+  - [貢獻指南](#貢獻指南)
+  - [授權](#授權)
 
 ---
 
-## 1. 開發規範與指導原則
+## 第一部分：Github Spec Kit（規格驅動開發框架）
 
-本專案採用嚴謹的開發規範，確保程式碼品質與專案一致性。所有開發活動都必須遵循以下核心原則：
+Spec Kit 是一個由 GitHub 官方推出的創新規格驅動開發（Spec-Driven Development, SDD）框架。它將傳統的靜態規格文件轉化為可執行的開發藍圖，讓規格成為驅動開發流程的核心。
 
-### 1.1 技術棧規範
+### 1.1 框架介紹
 
-**必選技術棧**：Java 17 LTS + Spring Boot 3.x + PostgreSQL + Redis + Docker
+- **設計哲學**：規格驅動開發（SDD）的核心理念是**讓規格本身變得可執行**。透過結構化的方式定義需求、計畫與任務，Copilot Agent 能夠理解並依循規格完成開發，確保最終產出與初始設計高度一致。
+- **企業治理**：內建的 `Constitution`（憲法）機制提供了一套專案治理框架，用於定義開發規範、技術選型與品質標準，確保團隊決策的一致性。
 
-**詳細規範**：[.github/instructions/tech-stack.instructions.md](.github/instructions/tech-stack.instructions.md)
+### 1.2 核心流程與用法
 
-### 1.2 Spring Boot 框架規範
+Spec Kit 提供標準化的四階段開發流程，引導開發者從需求到實作的每一步：
 
-**架構模式**：Clean Architecture（分層：domain / application / adapters / infrastructure）
+1.  **`/specify`**：定義專案的頂層目標、使用者故事與功能規格。此階段專注於「做什麼」。
+2.  **`/plan`**：根據規格制定技術方案、系統架構與資料模型。此階段專注於「如何做」。
+3.  **`/tasks`**：將技術計畫拆解為具體、可執行的開發任務清單。
+4.  **`/implement`**：Copilot Agent 根據任務清單，依序完成程式碼實作、測試與驗證。
 
-**詳細規範**：[.github/instructions/springboot-spec.instructions.md](.github/instructions/springboot-spec.instructions.md)
+### 1.3 快速開始
 
-### 1.3 文件寫作原則
+- **安裝與設定**：提供完整的環境設定指南與 Copilot Agent 整合教學。
+- **專案架構**：框架預設採用 Clean Architecture，提供標準化的專案目錄結構，適合企業級應用開發。
+- **品質控制**：包含 CI/CD 流程範本與程式碼品質檢查工具，確保專案合規性。
 
-**核心理念**：重點說明「為什麼」而非「是什麼」，避免冗長敘述，確保邏輯清晰
+### 1.4 核心資源
 
-**詳細規範**：[.github/instructions/document.instructions.md](.github/instructions/document.instructions.md)
-
-### 1.4 Git 提交與 PR 規範
-
-**提交格式**：Conventional Commits（繁體中文）
-
-**詳細規範**：[.github/instructions/git.instructions.md](.github/instructions/git.instructions.md)
-
----
-
-## 2. Spec Kit（規格驅動開發框架）
-
-Spec Kit 是一個創新的規格驅動開發框架，透過將規格文件轉化為可執行的藍圖，革命性地改變傳統軟體開發流程。
-
-### 2.1 概述與設計哲學
-
-規格驅動開發 (Spec-Driven Development, SDD) 的核心理念在於**讓規格本身變成可執行的**，將規格從靜態參考文件提升為開發流程的核心驅動力。
-
-**學習參考整理**：[res/spec-kit/README.md](res/spec-kit/README.md)
-
-### 2.2 多步驟優化流程：/specify → /plan → /tasks → /implement
-
-Spec Kit 提供標準化的開發流程，透過四個核心階段確保專案的品質與一致性：
-
-1. **specify**：定義專案規格與需求
-2. **plan**：制定技術計劃與架構設計
-3. **tasks**：拆解為具體開發任務
-4. **implement**：依序實作與驗證
-
-**實戰範例**：[res/spec-kit/case_podcase.md](res/spec-kit/case_podcase.md)
-
-### 2.3 Constitution（憲法）與企業治理
-
-Constitution 機制提供專案治理框架，確保開發決策的一致性與品質控制。
-
-### 2.4 架構與專案目錄
-
-基於 Clean Architecture 的標準化專案結構，支援企業級應用開發。
-
-### 2.5 安裝與快速開始
-
-提供完整的環境設定與快速開始指南。
-
-### 2.6 品質控制與合規（CI 範本）
-
-包含 CI/CD 流程範本與程式碼品質檢查工具。
-
-### 2.7 最佳實務與常見問題
-
-整理開發過程中的最佳實務與常見問題解決方案。
+- **官方文件**：[[Github] spec-kit](https://github.com/github/spec-kit)
+- **學習參考整理**：[res/spec-kit/README.md](res/spec-kit/README.md)
+- **實戰範例（Podcast）**：[res/spec-kit/case_podcase.md](res/spec-kit/case_podcase.md)
 
 ---
 
-## 3. TinyURL Lab（實戰專案）
+## 第二部分：TinyURL Lab（自行設計 + 實戰範例專案）
 
-TinyURL Lab 是一個完整的實戰專案，展示如何使用 GitHub Copilot 進行企業級應用開發。
+TinyURL Lab 是一個從零到一的完整實戰專案，旨在展示如何運用 GitHub Copilot 進行企業級後端服務開發。此專案不僅是技術演練，更是一套結合 **Copilot Prompts** 與**開發規範**的系統化方法論。
 
-### 3.1 專案背景與學習目標
+### 2.1 專案介紹
 
-本專案實作一個短網址服務，包含核心的 URL 縮短與重導向功能，採用現代化的微服務架構。
+- **專案背景**：實作一個功能完整的短網址服務（TinyURL），包含 URL 縮短、重導向、自訂網址與快取機制。
+- **學習目標**：
+  - 學習使用 Copilot 進行需求分析與任務拆解。
+  - 掌握在 Clean Architecture 下的測試驅動開發（TDD）。
+  - 體驗 Copilot Agent 驅動的自動化開發流程。
+- **技術棧**：Java 17, Spring Boot 3.x, PostgreSQL, Redis, Docker。
 
-**需求規格**：[docs/specs/tinyurl-requirements.md](docs/specs/tinyurl-requirements.md)
+### 2.2 Copilot 驅動開發流程
 
-### 3.2 環境需求與初始化
+本專案的核心是展示如何透過自訂的 Copilot Prompts 工具集，將開發流程自動化：
 
-**開發環境**：Java 17 + Spring Boot 3.x + PostgreSQL + Redis + Docker
+1.  **需求分析 (`/list-requirements`)**：使用此指令分析[需求規格文件](docs/specs/tinyurl-requirements.md)，自動生成結構化的功能清單。
+2.  **任務拆解 (`/list-tasks`)**：將功能清單拆解為自定義多個標準化的開發任務，涵蓋從環境建置到功能實作的完整過程。
+3.  **選擇性實作 (`##`)**：開發者可透過 `##` 語法選擇特定任務，讓 Copilot Agent 專注於單一目標的實作與驗證。
 
-**完整指南**：[res/tinyurl-lab.md/README.md](res/tinyurl-lab/README.md)
+### 2.3 環境設定與實作
 
-### 3.3 Instructions/Prompts 設定
+- **環境需求**：專案所需的開發工具與版本，包含 Docker, JDK, 與 IDE 設定。
+- **初始化指南**：提供詳細的步驟，引導使用者完成專案初始化與資料庫設定。
+- **實作與驗證**：遵循 TDD 原則，依序實作各項任務，並包含完整的單元測試與整合測試。
 
-本專案使用專門設計的 Copilot 指令集，包含需求分析與任務拆解工具：
+### 2.4 核心資源
 
-- **需求分析工具**：[.github/prompts/list-requirements.prompt.md](.github/prompts/list-requirements.prompt.md)
-- **任務拆解工具**：[.github/prompts/list-tasks.prompt.md](.github/prompts/list-tasks.prompt.md)
-
-### 3.4 需求分析：/list-requirements
-
-使用 `/list-requirements` 指令分析需求文件，產生結構化的功能需求清單。
-
-### 3.5 任務拆解：/list-tasks + 章節選擇##
-
-透過 `/list-tasks` 指令將專案拆解為 12 個開發任務，並使用 `##` 選擇特定任務進行實作。
-
-### 3.6 實作與驗證（含測試與迭代）
-
-依序實作各項任務，包含單元測試、整合測試與功能驗證。
-
-### 3.7 進階功能與部署路線
-
-擴展功能包含快取策略、監控指標、容器化部署等企業級需求。
-
-### 3.8 常見問題與最佳實務
-
-整理開發過程中的問題解決方案與最佳實務。
+- **實戰指南**：[res/tinyurl-lab/README.md](res/tinyurl-lab/README.md)
+- **需求規格**：[docs/specs/tinyurl-requirements.md](docs/specs/tinyurl-requirements.md)
+- **Copilot Prompts 工具集**：
+  - **需求分析工具**：[.github/prompts/list-requirements.prompt.md](.github/prompts/list-requirements.prompt.md)
+  - **任務拆解工具**：[.github/prompts/list-tasks.prompt.md](.github/prompts/list-tasks.prompt.md)
 
 ---
 
-## 4. 核心工具與資源
+## 附錄：開發規範與指導原則
 
-### 4.1 Copilot Prompts 工具集
+本專案採用嚴謹的開發規範，以確保程式碼品質與專案一致性。所有開發活動都必須導入 `.github/instructions/` 下的規範檔案至 Copilot Agent。
 
-本專案提供一套完整的 Copilot Prompts 工具，用於提升開發效率：
+### A.1 技術棧規範
 
-- **結構化文件生成器**：[.github/prompts/structured-document.prompt.md](.github/prompts/structured-document.prompt.md)
-- **需求分析工具**：[.github/prompts/list-requirements.prompt.md](.github/prompts/list-requirements.prompt.md)
-- **任務拆解工具**：[.github/prompts/list-tasks.prompt.md](.github/prompts/list-tasks.prompt.md)
+- **必選技術棧**：Java 17 LTS + Spring Boot 3.x + PostgreSQL + Redis + Docker
+- **詳細規範**：[.github/instructions/tech-stack.instructions.md](.github/instructions/tech-stack.instructions.md)
 
-### 4.2 開發環境配置
+### A.2 Spring Boot 框架規範
 
-**必要工具**：
+- **架構模式**：Clean Architecture（分層：domain / application / adapters / infrastructure）
+- **詳細規範**：[.github/instructions/springboot-spec.instructions.md](.github/instructions/springboot-spec.instructions.md)
 
-- GitHub Copilot（建議使用 Agent 模式 + Claude Sonnet 4）
-- Docker & Docker Compose
-- VS Code 或 IntelliJ IDEA
+### A.3 文件寫作原則
 
-### 4.3 參考文件與範例
+- **核心理念**：重點說明「為什麼」而非「是什麼」，避免冗長敘述，確保邏輯清晰。
+- **詳細規範**：[.github/instructions/document.instructions.md](.github/instructions/document.instructions.md)
 
-**核心資源**：
+### A.4 Git 提交與 PR 規範
 
-- [[Github] spec-kit](https://github.com/github/spec-kit)
-- [Spec Kit 學習參考整理](res/spec-kit/README.md)
-- [TinyURL Lab 實戰指南](res/tinyurl-lab/README.md)
-- [Podcast 開發流程範例](res/spec-kit/case_podcase.md)
-
-**開發規範**：
-
-- [技術棧規範](.github/instructions/tech-stack.instructions.md)
-- [Spring Boot 框架規範](.github/instructions/springboot-spec.instructions.md)
-- [文件寫作原則](.github/instructions/document.instructions.md)
-- [Git 提交與 PR 規範](.github/instructions/git.instructions.md)
+- **提交格式**：Conventional Commits（繁體中文）
+- **詳細規範**：[.github/instructions/git.instructions.md](.github/instructions/git.instructions.md)
 
 ---
-
-## 開始使用
-
-1. **閱讀開發規範**：熟悉專案的技術標準與程式碼風格
-2. **設定 Copilot 環境**：啟用 Agent 模式並選擇 Claude Sonnet 4 模型
-3. **導入 Instructions**：將 `.github/instructions/` 下的規範檔案加入 Copilot 設定
-4. **選擇學習路徑**：
-   - **理論學習**：從 [Spec Kit 指南](res/spec-kit/README.md) 開始
-   - **實戰演練**：直接進入 [TinyURL Lab](res/tinyurl-lab/README.md)
 
 ## 貢獻指南
 
 歡迎提交 Issue 或 Pull Request 來改善本專案。請確保：
 
-1. 遵循專案的開發規範與程式碼風格
-2. 提交前通過所有測試與程式碼檢查
-3. 使用繁體中文撰寫提交訊息與文件
-4. 更新相關文件以反映程式碼變更
+1.  遵循專案的開發規範與程式碼風格。
+2.  提交前通過所有測試與程式碼檢查。
+3.  使用繁體中文撰寫提交訊息與文件。
+4.  更新相關文件以反映程式碼變更。
 
 ## 授權
 
