@@ -27,6 +27,7 @@
     - [A.2 Spring Boot 框架規範](#a2-spring-boot-框架規範)
     - [A.3 文件寫作原則](#a3-文件寫作原則)
     - [A.4 Git 提交與 PR 規範](#a4-git-提交與-pr-規範)
+  - [更多參考](#更多參考)
   - [貢獻指南](#貢獻指南)
   - [授權](#授權)
 
@@ -127,6 +128,13 @@ Spec Kit 提供標準化的四階段開發流程，引導開發者從需求到�
 
 ---
 
+## 更多參考
+
+- [MCP Center](https://mcp.azure.com/)
+- [Playwright MCP Chrome Extension](https://github.com/microsoft/playwright-mcp/blob/main/extension/README.md)
+
+
+---
 ## 貢獻指南
 
 歡迎提交 Issue 或 Pull Request 來改善本專案。請確保：
