@@ -711,6 +711,7 @@ specify validate --constitution --security
 - [Spec Kit GitHub Repository](https://github.com/github/spec-kit) - 官方程式碼庫和最新版本
 - [Spec Kit CLI Documentation](https://github.com/github/spec-kit/blob/main/README.md) - 指令列工具使用指南
 - [Template Reference](https://github.com/github/spec-kit/tree/main/templates) - 官方模板檔案參考
+- [翻轉 AI 開發流程的規格驅動開發導論](./report.md)
 
 ### 外部資源
 - [Conventional Commits](https://www.conventionalcommits.org/) - Git 提交訊息規範
